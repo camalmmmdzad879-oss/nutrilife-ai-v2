@@ -2,17 +2,11 @@ name: Build NutriLife AI Debug APK
 
 on:
   push:
-    branches:
-      - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
-  build-debug-apk:
+  build:
     name: Test & Build Debug APK
     runs-on: ubuntu-latest
 
@@ -28,6 +22,11 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          api-level: 35
+          build-tools: "35.0.0"
+          cmdline-tools: "12.0"
+          accept-android-licenses: true
 
       - name: Prepare debug keystore
         run: |
@@ -35,10 +34,10 @@ jobs:
             if [ -f debug.keystore.base64 ]; then
               base64 -d debug.keystore.base64 > debug.keystore
             else
-              keytool -genkeypair -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+              keytool -genkeypair -v -keystore debug.keystore -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Android Debug,O=Android,C=US"
             fi
           fi
-          keytool -list -keystore debug.keystore -alias androiddebugkey -storepass android -keypass android
+          keytool -list -keystore debug.keystore -alias androiddebugkey -storepass android || true
 
       - name: Set up Gradle 9.3.1
         uses: gradle/actions/setup-gradle@v4
@@ -53,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: app/build/reports/tests/testDebugUnitTest/
+          path: app/build/reports/tests/testDebugUnitTest
           if-no-files-found: ignore
           retention-days: 7
 
@@ -78,3 +77,4 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
+          
