@@ -30,7 +30,9 @@ jobs:
           unzip -oq /tmp/cmdtools.zip -d /tmp/cmdtools_tmp
           rm -rf "$ANDROID_SDK_ROOT/cmdline-tools/latest"
           mv /tmp/cmdtools_tmp/cmdline-tools "$ANDROID_SDK_ROOT/cmdline-tools/latest"
-          yes | "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_SDK_ROOT" --licenses > /dev/null
+          set +e
+          yes | "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_SDK_ROOT" --licenses > /dev/null 2>&1
+          set -e
           "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_SDK_ROOT" \
             "platform-tools" \
             "platforms;android-35" \
