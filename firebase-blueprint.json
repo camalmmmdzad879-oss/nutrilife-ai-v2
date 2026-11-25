@@ -1,0 +1,206 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated user's nutrition profile and app preferences.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID" },
+        "displayName": { "type": "string" },
+        "age": { "type": "integer" },
+        "heightCm": { "type": "number" },
+        "currentWeightKg": { "type": "number" },
+        "goalWeightKg": { "type": "number" },
+        "sex": { "type": "string", "enum": ["MALE", "FEMALE"] },
+        "activityLevel": { "type": "string", "enum": ["SEDENTARY", "LIGHT", "MODERATE", "ACTIVE", "VERY_ACTIVE"] },
+        "nutritionGoal": { "type": "string", "enum": ["MAINTAIN", "GRADUAL_LOSS", "GRADUAL_GAIN", "IMPROVE_HABITS"] },
+        "dailyWaterTargetMl": { "type": "integer" },
+        "language": { "type": "string", "enum": ["AZ", "EN", "RU"] },
+        "themeMode": { "type": "string", "enum": ["SYSTEM", "LIGHT", "DARK"] },
+        "dietaryPreferences": { "type": "string" },
+        "allergies": { "type": "string" },
+        "onboardingCompleted": { "type": "boolean" },
+        "aiConsentAccepted": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp" }
+      },
+      "required": ["userId", "age", "heightCm", "currentWeightKg", "goalWeightKg", "sex", "activityLevel", "nutritionGoal", "dailyWaterTargetMl", "language", "themeMode", "onboardingCompleted", "aiConsentAccepted", "createdAt", "updatedAt"]
+    },
+    "DiaryEntry": {
+      "title": "DiaryEntry",
+      "description": "Logged food diary entry with macro and micronutrient totals.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "dateIso": { "type": "string" },
+        "mealType": { "type": "string", "enum": ["BREAKFAST", "LUNCH", "DINNER", "SNACK"] },
+        "foodName": { "type": "string" },
+        "foodCategory": { "type": "string" },
+        "servingGrams": { "type": "number" },
+        "portionLabel": { "type": "string" },
+        "calories": { "type": "number" },
+        "protein": { "type": "number" },
+        "carbs": { "type": "number" },
+        "fat": { "type": "number" },
+        "fiber": { "type": "number" },
+        "sugar": { "type": "number" },
+        "sodiumMg": { "type": "number" },
+        "calciumMg": { "type": "number" },
+        "ironMg": { "type": "number" },
+        "potassiumMg": { "type": "number" },
+        "magnesiumMg": { "type": "number" },
+        "vitaminAMcg": { "type": "number" },
+        "vitaminB12Mcg": { "type": "number" },
+        "vitaminCMg": { "type": "number" },
+        "vitaminDMcg": { "type": "number" },
+        "sourceType": { "type": "string", "enum": ["DATABASE", "USER_ENTERED", "BARCODE", "AI_ESTIMATED"] },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "dateIso", "mealType", "foodName", "foodCategory", "servingGrams", "portionLabel", "calories", "protein", "carbs", "fat", "sourceType", "createdAt", "updatedAt"]
+    },
+    "WaterLog": {
+      "title": "WaterLog",
+      "description": "Water intake log entry.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "dateIso": { "type": "string" },
+        "amountMl": { "type": "integer" },
+        "timestampMillis": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "dateIso", "amountMl", "timestampMillis", "createdAt", "updatedAt"]
+    },
+    "WeightLog": {
+      "title": "WeightLog",
+      "description": "Body weight measurement log.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "dateIso": { "type": "string" },
+        "weightKg": { "type": "number" },
+        "note": { "type": "string" },
+        "timestampMillis": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "dateIso", "weightKg", "timestampMillis", "createdAt", "updatedAt"]
+    },
+    "ExerciseLog": {
+      "title": "ExerciseLog",
+      "description": "Physical exercise duration and estimated calorie expenditure log.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "dateIso": { "type": "string" },
+        "activityType": { "type": "string" },
+        "durationMinutes": { "type": "integer" },
+        "estimatedCaloriesBurned": { "type": "number" },
+        "note": { "type": "string" },
+        "timestampMillis": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "dateIso", "activityType", "durationMinutes", "estimatedCaloriesBurned", "timestampMillis", "createdAt", "updatedAt"]
+    },
+    "CustomFood": {
+      "title": "CustomFood",
+      "description": "User-created custom food or favorite marker.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "nameAz": { "type": "string" },
+        "nameEn": { "type": "string" },
+        "nameRu": { "type": "string" },
+        "category": { "type": "string" },
+        "defaultServingLabel": { "type": "string" },
+        "defaultServingGrams": { "type": "number" },
+        "calories": { "type": "number" },
+        "protein": { "type": "number" },
+        "carbs": { "type": "number" },
+        "fat": { "type": "number" },
+        "fiber": { "type": "number" },
+        "sugar": { "type": "number" },
+        "sodiumMg": { "type": "number" },
+        "barcode": { "type": "string" },
+        "favorite": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "nameAz", "nameEn", "nameRu", "category", "defaultServingLabel", "defaultServingGrams", "calories", "protein", "carbs", "fat", "favorite", "createdAt", "updatedAt"]
+    },
+    "Recipe": {
+      "title": "Recipe",
+      "description": "Saved user recipe with per-serving nutrition.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "servings": { "type": "integer" },
+        "ingredientsSummary": { "type": "string" },
+        "totalCalories": { "type": "number" },
+        "totalProtein": { "type": "number" },
+        "totalCarbs": { "type": "number" },
+        "totalFat": { "type": "number" },
+        "totalFiber": { "type": "number" },
+        "favorite": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "name", "servings", "ingredientsSummary", "totalCalories", "totalProtein", "totalCarbs", "totalFat", "favorite", "createdAt", "updatedAt"]
+    },
+    "MealPlan": {
+      "title": "MealPlan",
+      "description": "Saved AI or curated meal plan.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "goalType": { "type": "string" },
+        "targetCalories": { "type": "integer" },
+        "mealItems": { "type": "array" },
+        "favorite": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "goalType", "targetCalories", "mealItems", "favorite", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Authenticated user profile and settings."
+    },
+    "/users/{userId}/diary_entries/{entryId}": {
+      "schema": { "$ref": "#/entities/DiaryEntry" },
+      "description": "User's logged food diary entries."
+    },
+    "/users/{userId}/water_logs/{logId}": {
+      "schema": { "$ref": "#/entities/WaterLog" },
+      "description": "User's water intake records."
+    },
+    "/users/{userId}/weight_logs/{logId}": {
+      "schema": { "$ref": "#/entities/WeightLog" },
+      "description": "User's weight history records."
+    },
+    "/users/{userId}/exercise_logs/{logId}": {
+      "schema": { "$ref": "#/entities/ExerciseLog" },
+      "description": "User's exercise activity logs."
+    },
+    "/users/{userId}/custom_foods/{foodId}": {
+      "schema": { "$ref": "#/entities/CustomFood" },
+      "description": "User's custom food items."
+    },
+    "/users/{userId}/recipes/{recipeId}": {
+      "schema": { "$ref": "#/entities/Recipe" },
+      "description": "User's saved recipes."
+    },
+    "/users/{userId}/meal_plans/{planId}": {
+      "schema": { "$ref": "#/entities/MealPlan" },
+      "description": "User's saved meal plans."
+    }
+  }
+}

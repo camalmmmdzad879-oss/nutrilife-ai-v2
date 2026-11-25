@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="firestore_database_id" translatable="false">ai-studio-android-nutrilif-3ee1d898-0131-433e-b33a-57c916d7b18f</string>
+    <string name="recaptcha_site_key" translatable="false">6LefmTAuAAAAAJ6YTUK0SHT-dvZAaHRDUUuDE-6V</string>
+</resources>
